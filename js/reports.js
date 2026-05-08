@@ -1,9 +1,16 @@
 (function () {
   "use strict";
 
-  const cases = (window.HANTAVIRUS_CASES || []).slice().sort(function (a, b) {
-    return b.caseCount - a.caseCount;
-  });
+  const ACTIVE_WINDOW_DAYS = 365;
+  const cutoff = Date.now() - ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+  const cases = (window.HANTAVIRUS_CASES || [])
+    .filter(function (r) {
+      const t = new Date(r.reportDate).getTime();
+      return !isNaN(t) && t >= cutoff;
+    })
+    .sort(function (a, b) {
+      return b.caseCount - a.caseCount;
+    });
 
   function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, function (c) {

@@ -65,6 +65,19 @@ body {
   animation: pulse-red 2.4s infinite ease-in-out;
 }
 
+.window-chip {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1px solid rgba(255, 43, 43, 0.45);
+  background: rgba(255, 43, 43, 0.08);
+  padding: 4px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
 .dashboard-nav {
   display: flex;
   gap: 4px;

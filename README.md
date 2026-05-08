@@ -21,7 +21,16 @@ case clusters. No build step — open `index.html` in a browser.
 - Bottom-right legend plus a "Show heat intensity by case count" toggle that
   overlays a soft red radial halo whose size scales with the case count.
 
+## Active surveillance window
+
+Both views show only **currently active cases** — anything with a
+`reportDate` older than 12 months is filtered out at runtime. The header
+chip "Active · last 12 months" makes the timeframe explicit. To change
+the window, edit `ACTIVE_WINDOW_DAYS` in `js/app.js` and `js/reports.js`.
+
 ## Customizing the data
 
 Edit `data/cases.js` — each entry needs `place`, `country`, `caseCount`,
-`lat`, `lng`, `reportDate`, and `source`.
+`lat`, `lng`, `reportDate`, and `source`. The shipped rows are **sample
+data** shaped like a real surveillance feed; replace them with live data
+from CDC / WHO / regional ministries to make the dashboard authoritative.

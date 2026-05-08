@@ -1,7 +1,14 @@
 (function () {
   "use strict";
 
-  const cases = window.HANTAVIRUS_CASES || [];
+  // Only show ACTIVE / CURRENT cases — anything older than the rolling
+  // surveillance window (12 months) is excluded.
+  const ACTIVE_WINDOW_DAYS = 365;
+  const cutoff = Date.now() - ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+  const cases = (window.HANTAVIRUS_CASES || []).filter(function (r) {
+    const t = new Date(r.reportDate).getTime();
+    return !isNaN(t) && t >= cutoff;
+  });
 
   // ---------- Map ----------
   const map = L.map("map", {
