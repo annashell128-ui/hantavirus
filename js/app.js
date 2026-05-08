@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  // Only show ACTIVE / CURRENT cases — anything older than the rolling
-  // outbreak surveillance window is excluded.
-  const ACTIVE_WINDOW_DAYS = 7;
+  // Active outbreak window — anything older is filtered out.
+  // Set to cover the current M/V Hondius cluster (WHO notified 2026-05-02).
+  const ACTIVE_WINDOW_DAYS = 14;
   const cutoff = Date.now() - ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
   const cases = (window.HANTAVIRUS_CASES || []).filter(function (r) {
     const t = new Date(r.reportDate).getTime();
@@ -46,9 +46,15 @@
     const r = radiusFor(report.caseCount);
     const diameter = Math.round(r * 2);
     const tier = tierFor(report.caseCount);
+    const statusClass =
+      report.status === "suspected"
+        ? "case-marker--suspected"
+        : "case-marker--confirmed";
     const html =
       '<div class="case-marker case-marker--' +
       tier +
+      " " +
+      statusClass +
       '" style="width:' +
       diameter +
       "px;height:" +
@@ -93,6 +99,10 @@
           day: "numeric"
         });
 
+    const isSuspected = report.status === "suspected";
+    const statusLabel = isSuspected ? "suspected" : "confirmed";
+    const noun = report.caseCount === 1 ? "case" : "cases";
+
     return (
       '<div class="popup-card">' +
       '<div class="popup-location">' +
@@ -101,12 +111,16 @@
       '<h3 class="popup-place">' +
       escapeHtml(report.place) +
       "</h3>" +
-      '<div class="popup-cases">' +
+      '<div class="popup-cases popup-cases--' +
+      statusLabel +
+      '">' +
       '<span class="popup-cases-number">' +
       report.caseCount +
       "</span>" +
-      '<span class="popup-cases-label">confirmed ' +
-      (report.caseCount === 1 ? "case" : "cases") +
+      '<span class="popup-cases-label">' +
+      statusLabel +
+      " " +
+      noun +
       "</span>" +
       "</div>" +
       '<div class="popup-meta">' +
@@ -161,13 +175,22 @@
   });
 
   // ---------- Header total ----------
-  const total = cases.reduce(function (sum, r) {
-    return sum + (r.caseCount || 0);
-  }, 0);
+  const tally = cases.reduce(
+    function (acc, r) {
+      const n = r.caseCount || 0;
+      if (r.status === "suspected") acc.suspected += n;
+      else acc.confirmed += n;
+      return acc;
+    },
+    { confirmed: 0, suspected: 0 }
+  );
   const totalEl = document.getElementById("case-total");
   if (totalEl) {
     totalEl.textContent =
-      total.toLocaleString() + " cases across " + cases.length + " reports";
+      tally.confirmed +
+      " confirmed · " +
+      tally.suspected +
+      " suspected";
   }
 
   // ---------- Heat toggle ----------

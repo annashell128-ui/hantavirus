@@ -23,15 +23,38 @@ case clusters. No build step — open `index.html` in a browser.
 
 ## Active surveillance window
 
-Both views show only **this week's outbreak** — anything with a
-`reportDate` older than 7 days is filtered out at runtime. The pulsing
-red header chip "Outbreak · last 7 days" makes the timeframe explicit.
-To change the window, edit `ACTIVE_WINDOW_DAYS` in `js/app.js` and
-`js/reports.js`.
+Both views show only the **active outbreak** — anything with a
+`reportDate` older than `ACTIVE_WINDOW_DAYS` (currently 14, set in
+`js/app.js` and `js/reports.js`) is filtered out at runtime.
 
-## Customizing the data
+## Data source
 
-Edit `data/cases.js` — each entry needs `place`, `country`, `caseCount`,
-`lat`, `lng`, `reportDate`, and `source`. The shipped rows are **sample
-data** shaped like a real surveillance feed; replace them with live data
-from CDC / WHO / regional ministries to make the dashboard authoritative.
+`data/cases.js` is a manually compiled snapshot of the **M/V Hondius
+Andes-hantavirus** cluster, derived from public reporting:
+
+- WHO Disease Outbreak News (DON 599)
+- CDC newsroom statement
+- CNN, CBS News, NPR, TIME, Al Jazeera, Live Science
+
+Each entry carries a `status` field (`confirmed` or `suspected`) and the
+URL of the reporting source. Numbers shift daily — re-run a news pull
+and edit the file to refresh, or wire it to a real API. To make this
+fully automated, point `data/cases.js` at a backend (e.g., a small
+Node/serverless job that pulls WHO DON + a news API on a schedule and
+re-publishes the JSON).
+
+## Schema
+
+```js
+{
+  id: "unique-id",
+  place: "Region or facility",
+  country: "Confirmed cases (M/V Hondius)" | "Suspected cases (M/V Hondius)",
+  caseCount: 2,
+  status: "confirmed" | "suspected",
+  lat: -33.918,
+  lng: 18.423,
+  reportDate: "2026-05-04",
+  source: "https://www.who.int/..."
+}
+```
