@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hantavirus Outbreak Tracker</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="title-block">
+      <span class="status-dot"></span>
+      <h1>Hantavirus Global Surveillance</h1>
+    </div>
+    <div class="meta-block">
+      <span class="meta-label">Live feed</span>
+      <span class="meta-value" id="case-total">— cases tracked</span>
+    </div>
+  </header>
+
+  <main>
+    <div id="map"></div>
+
+    <aside class="legend" aria-label="Map legend">
+      <h2>Case intensity</h2>
+      <ul>
+        <li>
+          <span class="legend-dot legend-dot--small"></span>
+          <span>Small glow &middot; 1–2 cases</span>
+        </li>
+        <li>
+          <span class="legend-dot legend-dot--medium"></span>
+          <span>Medium glow &middot; 3–10 cases</span>
+        </li>
+        <li>
+          <span class="legend-dot legend-dot--large"></span>
+          <span>Large glow &middot; 10+ cases</span>
+        </li>
+      </ul>
+
+      <label class="toggle">
+        <input type="checkbox" id="heat-toggle" />
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-label">Show heat intensity by case count</span>
+      </label>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <script src="data/cases.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
