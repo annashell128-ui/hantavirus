@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hantavirus Reports — Confirmed Cases</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-reports">
+  <header class="dashboard-header">
+    <div class="title-block">
+      <span class="status-dot"></span>
+      <h1>Hantavirus Global Surveillance</h1>
+    </div>
+    <nav class="dashboard-nav" aria-label="Primary">
+      <a class="dashboard-nav__link" href="index.html">Map</a>
+      <a class="dashboard-nav__link is-active" href="reports.html">Reports</a>
+    </nav>
+    <div class="meta-block">
+      <span class="meta-label">Live feed</span>
+      <span class="meta-value" id="case-total">— cases tracked</span>
+    </div>
+  </header>
+
+  <main class="reports-main">
+    <section class="reports-intro">
+      <h2>Confirmed case reports</h2>
+      <p>
+        Cities, states, and regions with confirmed hantavirus cases, sorted by
+        case count. Each row links to the public health source for that report.
+      </p>
+    </section>
+
+    <section class="reports-table-wrap">
+      <table class="reports-table">
+        <thead>
+          <tr>
+            <th scope="col">Location</th>
+            <th scope="col">Region / Country</th>
+            <th scope="col" class="num">Confirmed cases</th>
+            <th scope="col">Reported</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody id="reports-tbody">
+          <!-- populated by reports.js -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="data/cases.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>
