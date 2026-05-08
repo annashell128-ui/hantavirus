@@ -2,8 +2,8 @@
   "use strict";
 
   // Only show ACTIVE / CURRENT cases — anything older than the rolling
-  // surveillance window (12 months) is excluded.
-  const ACTIVE_WINDOW_DAYS = 365;
+  // outbreak surveillance window is excluded.
+  const ACTIVE_WINDOW_DAYS = 7;
   const cutoff = Date.now() - ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
   const cases = (window.HANTAVIRUS_CASES || []).filter(function (r) {
     const t = new Date(r.reportDate).getTime();

@@ -78,6 +78,14 @@ body {
   white-space: nowrap;
 }
 
+.window-chip--outbreak {
+  color: #fff;
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 12px var(--red-soft);
+  animation: pulse-red 2.4s infinite ease-in-out;
+}
+
 .dashboard-nav {
   display: flex;
   gap: 4px;

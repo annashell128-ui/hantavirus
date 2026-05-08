@@ -23,10 +23,11 @@ case clusters. No build step — open `index.html` in a browser.
 
 ## Active surveillance window
 
-Both views show only **currently active cases** — anything with a
-`reportDate` older than 12 months is filtered out at runtime. The header
-chip "Active · last 12 months" makes the timeframe explicit. To change
-the window, edit `ACTIVE_WINDOW_DAYS` in `js/app.js` and `js/reports.js`.
+Both views show only **this week's outbreak** — anything with a
+`reportDate` older than 7 days is filtered out at runtime. The pulsing
+red header chip "Outbreak · last 7 days" makes the timeframe explicit.
+To change the window, edit `ACTIVE_WINDOW_DAYS` in `js/app.js` and
+`js/reports.js`.
 
 ## Customizing the data
 

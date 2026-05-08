@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const ACTIVE_WINDOW_DAYS = 365;
+  const ACTIVE_WINDOW_DAYS = 7;
   const cutoff = Date.now() - ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
   const cases = (window.HANTAVIRUS_CASES || [])
     .filter(function (r) {
