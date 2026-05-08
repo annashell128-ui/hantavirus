@@ -153,6 +153,32 @@
     return escapeHtml(value);
   }
 
+  function renderLastUpdated() {
+    const labelEl = document.getElementById("last-updated-label");
+    if (!labelEl) return;
+    const ts = window.HANTAVIRUS_LAST_UPDATED;
+    if (!ts) {
+      labelEl.textContent = "Live feed";
+      return;
+    }
+    const updated = new Date(ts);
+    if (isNaN(updated.getTime())) {
+      labelEl.textContent = "Live feed";
+      return;
+    }
+    const ageMs = Date.now() - updated.getTime();
+    const ageHours = Math.floor(ageMs / 3600000);
+    const ageMinutes = Math.floor((ageMs % 3600000) / 60000);
+    const stale = ageMs > 12 * 3600000;
+    const ageStr =
+      ageHours > 0
+        ? ageHours + "h " + ageMinutes + "m ago"
+        : ageMinutes + "m ago";
+    labelEl.textContent = (stale ? "Stale · " : "Updated · ") + ageStr;
+    labelEl.title = updated.toLocaleString();
+    if (stale) labelEl.classList.add("is-stale");
+  }
+
   // ---------- Layer state ----------
   const markerLayer = L.layerGroup().addTo(map);
   const heatLayer = L.layerGroup();
@@ -192,6 +218,7 @@
       tally.suspected +
       " suspected";
   }
+  renderLastUpdated();
 
   // ---------- Heat toggle ----------
   const heatToggle = document.getElementById("heat-toggle");

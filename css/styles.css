@@ -130,6 +130,10 @@ body {
   color: var(--text-dim);
 }
 
+.meta-label.is-stale {
+  color: #ffb84d;
+}
+
 .meta-value {
   font-size: 13px;
   font-weight: 600;
